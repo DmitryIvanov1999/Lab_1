@@ -1,0 +1,3 @@
+C++ is a good programming language.
+It's just a string
+Test example
