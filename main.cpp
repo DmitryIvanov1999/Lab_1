@@ -11,7 +11,7 @@ int main()
     ostringstream oss;
     ifstream in;
     Aeroflot plane[7];
-    setlocale(LC_ALL, "rus");//����������� ��������� � �������� �������
+    setlocale(LC_ALL, "rus");//Подключение кодировки с русскими буквами
     char str[100];
     char ch;
     char prev=' ';
@@ -50,7 +50,7 @@ int main()
         }
         switch(choise)
         {
-        case 1: system("cls");
+        case 1: system("cls"); //Ввести все записи (максимум 7)
         for(int i=0; i<7; i++)
         {
            while(1)
@@ -79,14 +79,14 @@ int main()
         _getch();
         system("cls");
             break;
-        case 2: system("cls");
+        case 2: system("cls"); //Вывести все записи на экран
         sort_alphabet_order(plane);
         disp(plane);
         cout << "\nPress any button...\n";
         _getch();
         system("cls");
             break;
-        case 3: system("cls");
+        case 3: system("cls"); //Поиск рейса по типу самолета
         sort_alphabet_order(plane);
         cout << "Enter the type of plane for search in database:\n";
         gets(str);
@@ -96,10 +96,10 @@ int main()
         _getch();
         system("cls");
             break;
-        case 4: system("cls");
-        sort_alphabet_order(plane);
-        while(1)
-        {
+        case 4: system("cls"); //Изменить или добавить запись
+        sort_alphabet_order(plane); //Необходимо ввести номер записи для добавления или изменения (не более 7) 
+        while(1) //Если запись с таким номером существует, она будет изменена;
+        { //если не существует, то добавлена
             disp(plane);
             cout << "Enter the number of note you want to change or add:\n";
             gets(str);
@@ -149,11 +149,11 @@ int main()
         _getch();
         system("cls");
             break;
-        case 5: system("cls");
-        sizes[0]=0;
-        sizes[1]=0;
-        sizes[2]=0;
-        prev=' ';
+        case 5: system("cls"); //Считывание 3 предложений из файла Source.txt, их вывод в обратном порядке
+        sizes[0]=0; //Предложением считается любой набор символов до точки, вопр. знака и т.д.,
+        sizes[1]=0; //если был переход на новую строку.
+        sizes[2]=0; //Если знаки-разделители идут ПОДРЯД друг за другом, то предложение не считается (....!.?)
+        prev=' '; //Если меж разделителями хотя бы один символ, то предложение учитывается (. .)
         in.open("Source.txt");
         if(!in)
            cout << "File can't be open!\n";
@@ -226,7 +226,7 @@ int main()
         _getch();
         system("cls");
             break;
-        case 6:
+        case 6: //Выход
         cout << "Goodbye!\n";
         return 0;
             break;
