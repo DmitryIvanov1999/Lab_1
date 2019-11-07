@@ -1,25 +1,25 @@
-#include "Aeroflot.h"
-#include "Functions.h"
-#include <stdlib.h>
-#include <conio.h>
-#include <stdio.h>
+#include "Aeroflot.h"//h-заголовок для использования данных рабочего класса
+#include <stdlib.h>//h-заголовок для функции system("cls"), очищающей экран
+#include <conio.h>//h-заголовок для принятия команды нажатия любой клавиши _getch() при запросе
+#include <stdio.h>//h-заголовок для функции fflush(stdin), очищающей входной поток
+#include <string.h>//h-заголовок для работы со строками
 using namespace std;
 void Aeroflot::set_destination(char *data)
 {
-    long int size=string_length(data);
+    long int size=strlen(data);
     delete [] destination;
     destination=NULL;
     destination=new char[size+1];
-    string_copy(destination, data);
+    strcpy(destination, data);
     return;
 }
 void Aeroflot::set_type(char *data)
 {
-    long int size=string_length(data);
+    long int size=strlen(data);
     delete [] type;
     type=NULL;
     type=new char[size+1];
-    string_copy(type, data);
+    strcpy(type, data);
     return;
 }
 void Aeroflot::set_number(int data)
@@ -45,7 +45,7 @@ void Aeroflot::get_number(void)
 }
 Aeroflot::Aeroflot()
 {
-    cout << "Constructor for object with address " << this << "\n";
+    cout << "Constructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван конструктор для рассматриваемого объекта
     destination=new char[2];
     *(destination+0)=' ';
     *(destination+1)='\0';
@@ -56,32 +56,42 @@ Aeroflot::Aeroflot()
 }
 Aeroflot::~Aeroflot()
 {
-    cout << "Destructor for object with address " << this << "\n";
-    delete [] destination;
-    destination=NULL;
-    delete [] type;
-    type=NULL;
-    number=0;
+    cout << "Destructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван деструктор для рассматриваемого объекта
+    delete [] destination;//
+    destination=NULL;//
+    delete [] type;//Очистка памяти
+    type=NULL;//
+    number=0;//
 }
 istream &operator>>(istream &stream, Aeroflot &obj)
 {
     fflush(stdin);
     char str[100];
     int data_number;
+    int count=0;
+    bool flag=true;
     while(1)
     {
        cout << "Enter the destination:\n";
        gets(str);
-       if(str_check_of_alphabet(str)==true&&is_upper(str[0])==true)
-          break;
-       else
+       while(str[count])
        {
-          cout << "Incorrect! Press any button...\n";
-          _getch();
-          system("cls");
-          continue;
+          if((!isalpha(str[count])&&str[count]!='-'&&str[count]!=' '&&str[count]!='\'')||!isupper(str[0]))//Проверка на то, является ли введенная строка допустимой для названия города
+          {
+             cout << "Incorrect! Press any button...\n";
+             _getch();
+             system("cls");
+             flag=false;
+             count=0;
+             break;
+          }
+          flag=true;
+          count++;
        }
+       if(flag)
+          break;
     }
+    count=0;
     obj.set_destination(str);
     cout << "Enter the type of plane:\n";
     gets(str);
@@ -90,17 +100,27 @@ istream &operator>>(istream &stream, Aeroflot &obj)
     {
        cout << "Enter the number of flight:\n";
        gets(str);
-       if(str_check_of_number(str)==true)
+       while(str[count])
        {
-          data_number=alpha_to_i(str);
-          break;
+          if(isdigit(str[count]))//Проверка на то, является ли строка числом
+          {
+             flag=true;
+             count++;
+          }
+          else
+          {
+             cout << "Incorrect! Press any button...\n";
+             _getch();
+             system("cls");
+             flag=false;
+             count=0;
+             break;
+          }
        }
-       else
+       if(flag)
        {
-          cout << "Incorrect! Press any button...\n";
-          _getch();
-          system("cls");
-          continue;
+          data_number=atoi(str);
+          break;
        }
     }
     obj.set_number(data_number);
@@ -123,45 +143,20 @@ char* Aeroflot::take_type(void)
 }
 Aeroflot::Aeroflot(const Aeroflot& src)
 {
-    cout << "Copy constructor for object with address " << this << "\n";
-    if(destination)
-    {
-        delete [] destination;
-        destination=NULL;
-    }
-    if(type)
-    {
-        delete [] type;
-        type=NULL;
-    }
-    long int size=string_length(src.destination);
+    cout << "Copy constructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван конструктор копирования для рассматриваемого объекта
+    delete [] destination;//
+    destination=NULL;//
+    delete [] type;//Обнуление всей памяти для создаваемого объекта
+    type=NULL;//
+    number=0;//
+    /*-----------Выделение новой памяти и ее заполнение---------*/
+    long int size=strlen(src.destination);
     destination=new char [size+1];
-    string_copy(destination,src.destination);
-    size=string_length(src.type);
+    strcpy(destination,src.destination);
+    size=strlen(src.type);
     type=new char [size+1];
-    string_copy(type,src.type);
+    strcpy(type,src.type);
     number=src.number;
-}
-Aeroflot& Aeroflot::operator=(const Aeroflot &src)
-{
-    if(destination)
-    {
-        delete [] destination;
-        destination=NULL;
-    }
-    if(type)
-    {
-        delete [] type;
-        type=NULL;
-    }
-    long int size=string_length(src.destination);
-    destination=new char [size+1];
-    string_copy(destination,src.destination);
-    size=string_length(src.type);
-    type=new char [size+1];
-    string_copy(type,src.type);
-    number=src.number;
-    return *this;
 }
 int Aeroflot::take_number(void)
 {
@@ -170,13 +165,50 @@ int Aeroflot::take_number(void)
 Aeroflot::Aeroflot(char *data_destination, char *data_type, int data_number)
 {
    cout << "Constructor with parameters for object with address " << this << "\n";
-   long int size=string_length(data_destination);
+   long int size=strlen(data_destination);
    destination=NULL;
    destination=new char[size+1];
-   string_copy(destination, data_destination);
-   size=string_length(data_type);
+   strcpy(destination, data_destination);
+   size=strlen(data_type);
    type=NULL;
    type=new char[size+1];
-   string_copy(type, data_type);
+   strcpy(type, data_type);
    number=data_number;
+}
+void Aeroflot::search_by_type(Aeroflot obj[], char *str)
+{
+   int flag=0;
+   for(int i=0;i<7;i++)
+   {
+      if(strcmp(obj[i].take_type(),str)==0)//Поиск по всему массиву на совпадение запрашиваемого типа самолета с теми, которые есть в базе данных
+      {
+          flag++;
+          cout << obj[i] << "\n\n";
+      }
+   }
+   if(flag==0)
+      cout << "There are no flights with this type of plane!\n";
+   return;
+}
+void Aeroflot::disp(Aeroflot obj[])
+{
+   int count=1;
+   cout << "\t\t\t\tInformation about the all flights (not more than 7 notes):\n\n";
+   for(int i=0; i<7; i++)
+   {
+      if(*obj[i].take_destination()==' '&&*obj[i].take_type()==' '&&obj[i].take_number()==0)//Если запись пуста, не производить вывод
+         continue;
+      cout << "----- " << count << " -----\n";
+      count++;
+      cout << obj[i];
+      cout << "\n\n";
+   }
+   return;
+}
+bool operator<(Aeroflot l, Aeroflot r)
+{
+   if((strcmp(r.take_destination(),l.take_destination())>0)&&(strcmp(l.take_destination()," ")!=0)&&(strcmp(r.take_destination()," ")!=0))//Сравнение по алфавитному порядку
+      return true;
+   else
+      return false;
 }
