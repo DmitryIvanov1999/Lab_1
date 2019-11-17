@@ -3,6 +3,7 @@
 #include <conio.h>//h-заголовок для принятия команды нажатия любой клавиши _getch() при запросе
 #include <stdio.h>//h-заголовок для функции fflush(stdin), очищающей входной поток
 #include <string.h>//h-заголовок для работы со строками
+#define MAX_NUMBER 7//Максимальное количество записей - 7
 using namespace std;
 void Aeroflot::set_destination(char *data)
 {
@@ -178,7 +179,7 @@ Aeroflot::Aeroflot(char *data_destination, char *data_type, int data_number)
 void Aeroflot::search_by_type(Aeroflot obj[], char *str)
 {
    int flag=0;
-   for(int i=0;i<7;i++)
+   for(int i=0;i<MAX_NUMBER;i++)
    {
       if(strcmp(obj[i].take_type(),str)==0)//Поиск по всему массиву на совпадение запрашиваемого типа самолета с теми, которые есть в базе данных
       {
@@ -194,7 +195,7 @@ void Aeroflot::disp(Aeroflot obj[])
 {
    int count=1;
    cout << "\t\t\t\tInformation about the all flights (not more than 7 notes):\n\n";
-   for(int i=0; i<7; i++)
+   for(int i=0; i<MAX_NUMBER; i++)
    {
       if(*obj[i].take_destination()==' '&&*obj[i].take_type()==' '&&obj[i].take_number()==0)//Если запись пуста, не производить вывод
          continue;

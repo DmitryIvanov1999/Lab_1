@@ -5,12 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#define MAX_NUMBER 7//Максимальное количество записей - 7
 using namespace std;
 int main()
 {
     ostringstream oss;//Объект для вывода строк
     ifstream in;//Файл для чтения
-    Aeroflot plane[7];//Массив объектов (рейсов)
+    Aeroflot plane[MAX_NUMBER];//Массив объектов (рейсов)
     setlocale(LC_ALL, "rus");//Подключение кодировки с русскими буквами
     char str[100];//Служебная строка для ввода данных в консоль
     char ch;//Текущий символ при считывании из файла
@@ -65,7 +66,7 @@ int main()
         switch(choise)//Коммутатор, определяющий необходимые операции по заданному пункту в меню
         {
         case 1: system("cls");//Ввод всех данных
-        for(int i=0; i<7; i++)
+        for(int i=0; i<MAX_NUMBER; i++)
         {
            while(1)
            {
@@ -73,7 +74,7 @@ int main()
               cin >> plane[i];//Непосредственный ввод информации в объекте
               try
               {
-                 for(int j=0; j<7; j++)
+                 for(int j=0; j<MAX_NUMBER; j++)
                  {
                     if((plane[i].take_number()==plane[j].take_number())&&i!=j)//Проверка на то, уникален ли введенный номер рейса
                        throw 666;
@@ -90,7 +91,7 @@ int main()
            }
         }
         cout << "Sorting...\n\n";
-        sort(plane,plane+7);//Сортировка объектов по алфавиту (пункт назначения)
+        sort(plane,plane+MAX_NUMBER);//Сортировка объектов по алфавиту (пункт назначения)
         //Возникают сообщения о вызовах констр. копирования
         //Потому что чтобы поменять объекты местами, нужны временные переменные-объекты, которые затем удаляются
         cout << "\nPress any button...\n";
@@ -144,7 +145,7 @@ int main()
             }
             else
                note=atoi(str);
-            if(note>7||note<1)
+            if(note>MAX_NUMBER||note<1)
                {
                   cout << "Incorrect! Press any button...\n";
                   _getch();
@@ -160,7 +161,7 @@ int main()
            cin >> plane[note-1];//Замена или добавление только одной записи, номер которой ввели
            try
            {
-              for(int j=0; j<7; j++)
+              for(int j=0; j<MAX_NUMBER; j++)
               {
                  if((plane[note-1].take_number()==plane[j].take_number())&&((note-1)!=j))//Снова сравнение на уникальность номера рейса
                     throw 999;
@@ -176,7 +177,7 @@ int main()
            break;
         }
         cout << "Sorting...\n\n";
-        sort(plane,plane+7);
+        sort(plane,plane+MAX_NUMBER);
         cout << "\nPress any button...\n";
         _getch();
         system("cls");
