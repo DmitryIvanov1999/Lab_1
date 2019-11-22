@@ -26,6 +26,6 @@ public:
     int take_number(void);//Получение номера рейса
     static void search_by_type(Aeroflot obj[], char *str);//Статический метод для сортировка рейсов по алфавитному порядку (пункты назначения)
     static void disp(Aeroflot obj[]);//Статический метод для вывода всего массива объектов на экран
-    friend bool operator<(Aeroflot l, Aeroflot r);//Перегруженный оператор сравнения, благодаря которому выполняется сортировка объектов по алфавитному порядку в функции std::sort()
+    friend bool operator<(Aeroflot &l, Aeroflot &r);//Перегруженный оператор сравнения, благодаря которому выполняется сортировка объектов по алфавитному порядку в функции std::sort()
 };
 #endif // AEROFLOT_H_INCLUDED

@@ -206,7 +206,7 @@ void Aeroflot::disp(Aeroflot obj[])
    }
    return;
 }
-bool operator<(Aeroflot l, Aeroflot r)
+bool operator<(Aeroflot &l, Aeroflot &r)
 {
    if((strcmp(r.take_destination(),l.take_destination())>0)&&(strcmp(l.take_destination()," ")!=0)&&(strcmp(r.take_destination()," ")!=0))//Сравнение по алфавитному порядку
       return true;
