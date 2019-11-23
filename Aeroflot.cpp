@@ -46,7 +46,6 @@ void Aeroflot::get_number(void)
 }
 Aeroflot::Aeroflot()
 {
-    cout << "Constructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван конструктор для рассматриваемого объекта
     destination=new char[2];
     *(destination+0)=' ';
     *(destination+1)='\0';
@@ -57,7 +56,6 @@ Aeroflot::Aeroflot()
 }
 Aeroflot::~Aeroflot()
 {
-    cout << "Destructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван деструктор для рассматриваемого объекта
     delete [] destination;//
     destination=NULL;//
     delete [] type;//Очистка памяти
@@ -144,7 +142,6 @@ char* Aeroflot::take_type(void)
 }
 Aeroflot::Aeroflot(const Aeroflot& src)
 {
-    cout << "Copy constructor for object with address " << this << "\n";//Вывод сообщ. о том, что вызван конструктор копирования для рассматриваемого объекта
     delete [] destination;//
     destination=NULL;//
     delete [] type;//Обнуление всей памяти для создаваемого объекта
@@ -165,7 +162,6 @@ int Aeroflot::take_number(void)
 }
 Aeroflot::Aeroflot(char *data_destination, char *data_type, int data_number)
 {
-   cout << "Constructor with parameters for object with address " << this << "\n";
    long int size=strlen(data_destination);
    destination=NULL;
    destination=new char[size+1];
